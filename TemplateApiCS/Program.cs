@@ -1,3 +1,4 @@
+using DoctorateCS;
 using Microsoft.Extensions.Configuration;
 using TemplateApiCS.Database;
 using TemplateApiCS.Middlewares;
@@ -6,13 +7,11 @@ namespace TemplateApiCS
 {
     public static class Program
     {
-#pragma warning disable CS8618 // Won't be null unless if the startup fails
         public static WebApplication WebApplication { get; set; }
-#pragma warning restore CS8618
         public static IServiceProvider IServiceProvider => WebApplication.Services;
         public static IConfiguration IConfiguration => WebApplication.Configuration;
-        public static ILoggerFactory? ILoggerFactory => WebApplication.Services.GetService<ILoggerFactory>();
-
+        public static AppSettings AppSettings => IConfiguration.GetRequiredSection(nameof(AppSettings)).Get<AppSettings>();
+        public static ILoggerFactory ILoggerFactory => WebApplication.Services.GetService<ILoggerFactory>();
         public static void Main(string[] args)
         {
             // https://docs.microsoft.com/es-es/dotnet/core/extensions/configuration-providers
@@ -34,6 +33,11 @@ namespace TemplateApiCS
 
             var builder = WebApplication.CreateBuilder(args);
 
+            // Setup Configuration
+            var config = builder.Configuration;
+
+            config.AddConfiguration(iConfiguration);
+
             // Add services to the container.
             var IServiceCollection = builder.Services;
 
@@ -43,19 +47,19 @@ namespace TemplateApiCS
             IServiceCollection.AddSwaggerGen();
 
             IServiceCollection.AddHttpClient();
-            IServiceCollection.AddSingleton(iConfiguration);
             IServiceCollection.AddSingleton(iLoggerFactory);
+            IServiceCollection.AddScoped<AppSettings>((_) => AppSettings);
 
-//            IServiceCollection.AddSqlite<DatabaseContex>(iConfiguration.GetConnectionString("SampleContex"));
+            //            IServiceCollection.AddSqlite<DatabaseContext>(iConfiguration.GetConnectionString("SampleContext"));
 
-//            IServiceCollection.AddDbContext<DatabaseContex>((builderOptions) =>
-//            {
-//#if DEBUG
-//                builderOptions.EnableDetailedErrors();
-//                builderOptions.EnableSensitiveDataLogging();
-                
-//#endif
-//            });
+            //            IServiceCollection.AddDbContext<DatabaseContext>((builderOptions) =>
+            //            {
+            //#if DEBUG
+            //                builderOptions.EnableDetailedErrors();
+            //                builderOptions.EnableSensitiveDataLogging();
+
+            //#endif
+            //            });
 
             // Http file browser
             // Maybe not needed

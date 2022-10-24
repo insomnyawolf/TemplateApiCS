@@ -4,9 +4,9 @@ using System;
 
 namespace TemplateApiCS.Database
 {
-    public partial class DatabaseContex : DbContext
+    public partial class DatabaseContext : DbContext
     {
-        public DatabaseContex(DbContextOptions<DatabaseContex> options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
         }

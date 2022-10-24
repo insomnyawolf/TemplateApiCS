@@ -23,7 +23,7 @@
     "SampleConfig": "TEST"
   },
   "ConnectionStrings": {
-    "SampleContex": "Data Source=database.db;Cache=Shared"
+    "SampleContext": "Data Source=database.db;Cache=Shared"
   },
   "AllowedHosts": "*"
 }

@@ -1,6 +1,6 @@
 ﻿namespace TemplateApiCS.Database
 {
-    public partial class DatabaseContex
+    public partial class DatabaseContext
     {
     }
 }

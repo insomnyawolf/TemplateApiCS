@@ -12,7 +12,7 @@ IF '%errorlevel%' NEQ '0' (
 
 REM Try creating an updated version of the models that exist in the database
 ren "Database\Models" "ModelsTemp"
-dotnet ef dbcontext scaffold "Data Source=database.db;Cache=Shared" Microsoft.EntityFrameworkCore.Sqlite --data-annotations --no-onconfiguring -c DatabaseContex --context-dir Database --output-dir Database/Models --force
+dotnet ef dbcontext scaffold "Data Source=database.db;Cache=Shared" Microsoft.EntityFrameworkCore.Sqlite --data-annotations --no-onconfiguring -c DatabaseContext --context-dir Database --output-dir Database/Models --force
 IF '%errorlevel%' NEQ '0' (
     ren "Database\ModelsTemp" "Models"
     pause
